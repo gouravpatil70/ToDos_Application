@@ -56,6 +56,7 @@ class _HomePageState extends State<HomePage> {
       updateTheListView();
     }
     return Scaffold(
+      backgroundColor: AppColors.homePageBodyBackgroundColor,
       appBar: AppBar(
         title: const Text('My Expenses'),
         actions: [
@@ -119,55 +120,75 @@ class _HomePageState extends State<HomePage> {
     return ListView.builder(
       itemCount: count,
       itemBuilder: (BuildContext context, int index){
+
         return Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: ListTile(
-            tileColor: expenseList[index].mode == 'Credit' 
-                       ? AppColors.homePageTileColor2
-                       : AppColors.homePageTileColor1,
-            shape: RoundedRectangleBorder(
+           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    'Reason : ${expenseList[index].reason}',
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
+          clipBehavior: Clip.none,
+
+          color: expenseList[index].mode == 'Credit'
+                 ? AppColors.backgroundCardColor2
+                 : AppColors.backgroundCardColor1
+          ,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: 
+              Card(
+              margin: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: ListTile(
+                tileColor: AppColors.tileColors,
+                // tileColor: expenseList[index].mode == 'Credit' 
+                //            ? AppColors.homePageTileColor2
+                //            : AppColors.homePageTileColor1,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 15.0),
-                  child: Text(
-                    'Rupees : ${(expenseList[index].rupees).toString()}',
-                    style: const TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.white,
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child:
+                       Text(
+                        'Reason : ${expenseList[index].reason}',
+                        style: const TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          // color: Colors.white,
+                        ),
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 15.0),
+                      child: 
+                      Text(
+                        'Rupees : ${(expenseList[index].rupees).toString()}',
+                        style: const TextStyle(
+                          fontSize: 18.0,
+                          // color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+                subtitle: Text(
+                  '${expenseList[index].date}',
+                  textAlign: TextAlign.right,
+                  style: const TextStyle(
+                    fontSize: 16.0,
+                    // color: Colors.white,
+                  )
+                ),
+                onTap: (){
+                  moveToModifyExpense(expenseList[index],'Edit Expense');
+                },
+              ),
             ),
-            subtitle: Text(
-              '${expenseList[index].date}',
-              textAlign: TextAlign.right,
-              style: const TextStyle(
-                fontSize: 16.0,
-                color: Colors.white,
-              )
-            ),
-            onTap: (){
-              moveToModifyExpense(expenseList[index],'Edit Expense');
-            },
           ),
         );
       },
