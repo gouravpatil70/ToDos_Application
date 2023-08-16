@@ -46,6 +46,7 @@ class _ExpensePageState extends State<ExpensePage>{
         appBar: AppBar(
           title: Text(widget.appBarTitle),
         ),
+        backgroundColor: AppColors.appBodyBackgroundColor,
         body: Form(
           key: _key,
           child: Center(
@@ -53,7 +54,7 @@ class _ExpensePageState extends State<ExpensePage>{
               child: Card(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.only(left: 8.0,right:8.0,top: 40.0,bottom: 40.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

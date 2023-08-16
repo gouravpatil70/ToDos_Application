@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
       updateTheListView();
     }
     return Scaffold(
-      backgroundColor: AppColors.homePageBodyBackgroundColor,
+      backgroundColor: AppColors.appBodyBackgroundColor,
       appBar: AppBar(
         title: const Text('My Expenses'),
         actions: [

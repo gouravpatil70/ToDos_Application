@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors{
 
-  static const Color homePageBodyBackgroundColor = Color.fromARGB(255, 228, 217, 244);
+  static const Color appBodyBackgroundColor = Color.fromARGB(255, 228, 217, 244);
   static const Color  homePageDashBoardColor =  Color.fromRGBO(149, 119, 202, 1);
   static const Color homePageDashBoardTextColor = Colors.white;
   static const Color homePageDashBoardCreditedColor = Color.fromARGB(255, 113, 243, 117);
