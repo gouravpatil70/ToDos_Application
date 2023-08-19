@@ -1,0 +1,25 @@
+import 'package:flutter/material.dart';
+import '../Component/Components.dart';
+
+class HomePage extends StatefulWidget{
+
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>{
+
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: Components.customAppBarMethod("ToDo's", true, calenderShowMethod),
+    );
+  }
+
+  calenderShowMethod(){
+
+  }
+  defaultEmptyMethod(){}
+}
