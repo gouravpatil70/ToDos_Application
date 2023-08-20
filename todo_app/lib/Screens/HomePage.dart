@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Utils/AppColors.dart';
 import '../Component/Components.dart';
+import '../Animations/PageChangeAnimation.dart';
 
 class HomePage extends StatefulWidget{
 
@@ -31,10 +32,9 @@ class _HomePageState extends State<HomePage>{
     });
     switch (value) {
       case 0:
-        navigateToHomePage();
         break;
       case 1:
-        navigateToEditeToDosPage();
+        navigateToEditeToDosPage('Add New ToDo');
         break;
     }
   }
@@ -43,7 +43,10 @@ class _HomePageState extends State<HomePage>{
 
   defaultEmptyMethod(){}
 
-  navigateToEditeToDosPage(){}
+  navigateToEditeToDosPage(String title){
+    Navigator.of(context).pushReplacement(PageChangeAnimation.createRoute(title,'toLeft','AddTask'));
+  }
 
-  navigateToHomePage(){}
+  // navigateToHomePage(){}
+  
 }
