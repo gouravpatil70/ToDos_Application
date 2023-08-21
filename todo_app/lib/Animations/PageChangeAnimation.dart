@@ -11,7 +11,7 @@ class PageChangeAnimation{
       },
       transitionDuration: const Duration(milliseconds: 500),
       transitionsBuilder: (context,animation,secondaryAnimation,child){
-        var begin = (slidePosition == 'toLeft' ? const Offset(1,0) : const Offset(-1, 0));
+        var begin = (slidePosition == 'toRight' ? const Offset(1,0) : const Offset(-1, 0));
         const end = Offset.zero;
         const curve = Curves.ease;
 
