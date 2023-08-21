@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'HomePage.dart';
 import '../Component/Components.dart';
+import '../Animations/PageChangeAnimation.dart';
+import '../Utils/AppColors.dart';
 
 class AddTask extends StatefulWidget {
   final String title;
@@ -13,12 +14,33 @@ class AddTask extends StatefulWidget {
 class _AddTaskState extends State<AddTask> {
 
   int currentIndex = 1;
-  
+  final GlobalKey<FormState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: Components.customAppBarMethod(widget.title, false, defaultEmptyMethod),
-
+      backgroundColor: AppColors.appBackgroundColor,
+      body: Form(
+        key: _key,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 40.0, 10.0),
+                  child: Components.textWidget('Priority'),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0.0, 20.0, 30.0, 10.0),
+                    child: Components.dropDownButtonWidget(),
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
       bottomNavigationBar: Components.customBottomNavigationBar(currentIndex, changeDisplayPage),
     );
     
@@ -38,9 +60,7 @@ class _AddTaskState extends State<AddTask> {
   }
 
   navigateToHomePage(){
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
-      return const HomePage();
-    }));
+    Navigator.of(context).pushReplacement(PageChangeAnimation.createRoute('-', 'toLeft', '/'));
   }
 
   defaultEmptyMethod(){}

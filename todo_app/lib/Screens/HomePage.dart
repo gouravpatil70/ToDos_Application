@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage>{
   defaultEmptyMethod(){}
 
   navigateToEditeToDosPage(String title){
-    Navigator.of(context).pushReplacement(PageChangeAnimation.createRoute(title,'toLeft','AddTask'));
+    Navigator.of(context).pushReplacement(PageChangeAnimation.createRoute(title,'toRight','AddTask'));
   }
 
   // navigateToHomePage(){}

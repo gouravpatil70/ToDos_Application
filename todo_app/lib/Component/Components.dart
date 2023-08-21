@@ -58,7 +58,6 @@ class Components{
     );
   }
 
-
   // New BottomNavigatorBar 
   static CurvedNavigationBar curvedBottomNavigatorBar(int currentSelectedId,var changeDisplayPage){
     return CurvedNavigationBar(
@@ -80,6 +79,46 @@ class Components{
       index: currentSelectedId,
       onTap: (value) => changeDisplayPage(value),
       buttonBackgroundColor: AppColors.appPrimaryColor,
+    );
+  }
+
+
+  // Text Widget
+  static textWidget(String title){
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: 20.0,
+        fontWeight: FontWeight.bold,
+      )
+    );
+  }
+
+
+  // Dropdown Button
+  static dropDownButtonWidget(){
+    const List<String> dropDownItems = <String>['Low','Medium','High'];
+    
+    return DropdownButton(
+      value: dropDownItems.last,
+      icon: const Icon(
+        Icons.arrow_drop_down_outlined,
+        color: AppColors.appPrimaryColorForWidget,
+      ),
+      isExpanded: true,
+      underline: Container(
+        height: 2,
+        color: AppColors.appPrimaryColor,
+      ),
+      onChanged: (value){
+        
+      },
+      items: dropDownItems.map<DropdownMenuItem<String>>((String value){
+        return DropdownMenuItem(
+          value: value,
+          child: Text(value),
+        );
+      }).toList() , 
     );
   }
 
