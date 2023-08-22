@@ -15,6 +15,7 @@ class _AddTaskState extends State<AddTask> {
 
   int currentIndex = 1;
   final GlobalKey<FormState> _key = GlobalKey();
+  String currentPriority = 'High';
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -22,23 +23,51 @@ class _AddTaskState extends State<AddTask> {
       backgroundColor: AppColors.appBackgroundColor,
       body: Form(
         key: _key,
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 40.0, 10.0),
-                  child: Components.textWidget('Priority'),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0.0, 20.0, 30.0, 10.0),
-                    child: Components.dropDownButtonWidget(),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+        
+              // For the Priority Text & their DropDownManuItem
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 10.0),
+                    child: Components.textWidget('Priority'),
                   ),
-                )
-              ],
-            )
-          ],
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 40.0, 40.0, 10.0),
+                      child: Components.dropDownButtonWidget(currentPriority,changeToDoPriority),
+                    ),
+                  )
+                ],
+              ),
+        
+        
+              // For the Task Title
+              Padding(
+                padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 10.0),
+                child: Components.textWidget('Task Title'),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
+                child: TextFormField(
+                    validator: (input){
+                      if(input!.isEmpty){
+                        return 'Please provide title here';
+                      }
+                      return null;
+                    },
+                    maxLines: 8,
+                    maxLength: 100,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Components.customBottomNavigationBar(currentIndex, changeDisplayPage),
@@ -61,6 +90,12 @@ class _AddTaskState extends State<AddTask> {
 
   navigateToHomePage(){
     Navigator.of(context).pushReplacement(PageChangeAnimation.createRoute('-', 'toLeft', '/'));
+  }
+
+  changeToDoPriority(String changedPriority){
+    setState(() {
+      currentPriority = changedPriority;
+    });
   }
 
   defaultEmptyMethod(){}
