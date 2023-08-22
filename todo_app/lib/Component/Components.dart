@@ -96,11 +96,11 @@ class Components{
 
 
   // Dropdown Button
-  static dropDownButtonWidget(){
+  static dropDownButtonWidget(String currentPriority,var changedPriority){
     const List<String> dropDownItems = <String>['Low','Medium','High'];
     
     return DropdownButton(
-      value: dropDownItems.last,
+      value: currentPriority,
       icon: const Icon(
         Icons.arrow_drop_down_outlined,
         color: AppColors.appPrimaryColorForWidget,
@@ -111,13 +111,23 @@ class Components{
         color: AppColors.appPrimaryColor,
       ),
       onChanged: (value){
-        
+        changedPriority(value);
       },
       items: dropDownItems.map<DropdownMenuItem<String>>((String value){
         return DropdownMenuItem(
           value: value,
-          child: Text(value),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: Text(
+              value,
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 20.0,
+              ),
+            ),
+          ),
         );
+        
       }).toList() , 
     );
   }
