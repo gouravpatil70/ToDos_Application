@@ -121,7 +121,8 @@ class Components{
             child: Text(
               value,
               style: const TextStyle(
-                color: Colors.red,
+                color: AppColors.dropDownMenuItemColor,
+                fontWeight: FontWeight.w400,
                 fontSize: 20.0,
               ),
             ),
@@ -129,6 +130,43 @@ class Components{
         );
         
       }).toList() , 
+    );
+  }
+
+  static TextFormField textFormFieldWidget(String dataVariable){
+    return TextFormField(
+      validator: (input){
+        if(input!.isEmpty){
+          return 'Please provide title here';
+        }
+        return null;
+      },
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(),
+      ),
+      maxLines: 8,
+      maxLength: 100,
+      onChanged: (input)=> dataVariable = input,
+    );
+  }
+
+  static buttonWidget(Color buttonColor,String buttonName, var actionMethod){
+    return ElevatedButton(
+      onPressed: (){
+        actionMethod();
+      }, 
+      style: ElevatedButton.styleFrom(
+        backgroundColor: buttonColor,
+        padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0)
+      ),
+
+      child: Text(
+        buttonName,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 20.0
+        )
+      )
     );
   }
 
