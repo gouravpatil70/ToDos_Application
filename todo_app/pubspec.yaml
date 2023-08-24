@@ -39,6 +39,12 @@ dependencies:
   # Adding Package for Bottom Navigator
   curved_navigation_bar: ^1.0.3
 
+  # Sqflite database
+  sqflite: ^2.3.0
+
+  # For getting the directory working path in mobile
+  path_provider: ^2.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
