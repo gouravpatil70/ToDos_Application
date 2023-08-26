@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'ToDo.dart';
@@ -38,8 +37,9 @@ class DatabaseHelper{
     await db.execute('CREATE TABLE $tableName($colId INTEGER PRIMARY KEY, $colTitle TEXT, $colPriority VARCHAR(10),  $colDate TEXT)');
   }
 
-  Future<int> insertIntoTable(ToDo object)async{
+  Future<int> insertIntoTable(var object)async{
     Database db = await database;
+    
     int result = await db.insert(tableName, object.convertToMapObject());
     return result;
   }
@@ -47,6 +47,18 @@ class DatabaseHelper{
   Future<int> updateData(ToDo object)async{
     Database db = await database;
     int result = await db.update(tableName, object.convertToMapObject(),where: '$colId = ?',whereArgs: [object.id]);
+    return result;
+  }
+
+  Future<List<Map<String,dynamic>>> getAllQueries()async{
+    Database db = await database;
+    List<Map<String,dynamic>> dataList = await db.rawQuery('SELECT * FROM $tableName');
+    return dataList;
+  }
+
+  Future<int> getTotalCount()async{
+    List<Map<String,dynamic>> ls = await getAllQueries();
+    int result = ls.length;
     return result;
   }
   

@@ -133,7 +133,7 @@ class Components{
     );
   }
 
-  static TextFormField textFormFieldWidget(String dataVariable){
+  static TextFormField textFormFieldWidget(String dataVariable, var methodOfTextField){
     return TextFormField(
       validator: (input){
         if(input!.isEmpty){
@@ -146,7 +146,7 @@ class Components{
       ),
       maxLines: 8,
       maxLength: 100,
-      onChanged: (input)=> dataVariable = input,
+      onChanged: (input)=> methodOfTextField(input),
     );
   }
 

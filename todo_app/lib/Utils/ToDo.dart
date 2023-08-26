@@ -5,6 +5,10 @@ class ToDo{
   var _priority;
   var _date;
 
+
+
+  ToDo();
+
   // Getters
   int get id => _id;
 

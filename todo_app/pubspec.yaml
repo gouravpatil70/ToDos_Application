@@ -45,6 +45,9 @@ dependencies:
   # For getting the directory working path in mobile
   path_provider: ^2.1.0
 
+  # For Date picking
+  intl: ^0.18.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
