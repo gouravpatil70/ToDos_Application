@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../Component/Components.dart';
 import '../Animations/PageChangeAnimation.dart';
 import '../Utils/AppColors.dart';
+import '../Utils/DatabaseHelper.dart';
+import '../Utils//ToDo.dart';
 
 class AddTask extends StatefulWidget {
   final String title;
@@ -18,6 +20,11 @@ class _AddTaskState extends State<AddTask> {
   String currentPriority = 'High';
   String noteTitle = '';
 
+  // Objects
+  ToDo todoObject = ToDo();
+  final DatabaseHelper _helperObject = DatabaseHelper();
+  
+  
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -55,7 +62,7 @@ class _AddTaskState extends State<AddTask> {
 
               Padding(
                 padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
-                child: Components.textFormFieldWidget(noteTitle),
+                child: Components.textFormFieldWidget(noteTitle,methodOfTextField),
               ),
 
 
@@ -92,6 +99,12 @@ class _AddTaskState extends State<AddTask> {
     }
   }
 
+  methodOfTextField(String input){
+    setState(() {
+      noteTitle = input;
+    });
+  }
+
   navigateToHomePage(){
     Navigator.of(context).pushReplacement(PageChangeAnimation.createRoute('-', 'toLeft', '/'));
   }
@@ -102,9 +115,20 @@ class _AddTaskState extends State<AddTask> {
     });
   }
 
-  onSaveMethod(){
+  onSaveMethod()async{
       if(_key.currentState!.validate()){
         _key.currentState!.save();
+        // print(todoObject.priority);
+        // print(todoObject.title);
+        // print(todoObject.date);
+        var count = await _helperObject.getTotalCount();
+        todoObject.id = count+1;
+        todoObject.priority = currentPriority;
+        todoObject.title = noteTitle;
+        todoObject.date = DateTime.now().toString().substring(0,11);
+
+        var result = await _helperObject.insertIntoTable(todoObject);
+        print(result);
         showDialogBox('Success','Data Saved');
       }
   }
