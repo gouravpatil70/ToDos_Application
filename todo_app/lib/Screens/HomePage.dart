@@ -3,6 +3,8 @@ import '../Utils/todo.dart';
 import '../Utils/AppColors.dart';
 import '../Component/Components.dart';
 import '../Animations/PageChangeAnimation.dart';
+import 'package:sqflite/sqflite.dart';
+import '../Utils/DatabaseHelper.dart';
 
 class HomePage extends StatefulWidget{
 
@@ -17,9 +19,36 @@ class _HomePageState extends State<HomePage>{
   int currentSelectedId = 0;
   bool currentCheckBoxValue = false;
 
+  var currentTextStyle;
+  var taskList;
+  int totalTasksCount = 0;
+  
+  final DatabaseHelper _helperObject = DatabaseHelper();
+
+  TextStyle normalTextStyle = const TextStyle(
+    fontSize: 20.0,
+  );
+
+  TextStyle decoratedTextStyle = const TextStyle(
+    fontSize: 20.0,
+    decoration: TextDecoration.lineThrough,
+    color: AppColors.whiteShadeColor,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      currentTextStyle = normalTextStyle;
+    });
+  }
+
   @override
   Widget build(BuildContext context){
-
+    if(taskList == null){
+      taskList = <ToDo>[];
+      getUpdatedListFromDatabase();
+    }
 
     return Scaffold(
       backgroundColor: AppColors.appBackgroundColor,
@@ -39,7 +68,7 @@ class _HomePageState extends State<HomePage>{
       case 0:
         break;
       case 1:
-        navigateToEditeToDosPage('Add New ToDo');
+        navigateToEditeToDosPage('Add New ToDo',ToDo(0, '', 'Low', ''));
         break;
     }
   }
@@ -50,42 +79,58 @@ class _HomePageState extends State<HomePage>{
 
   bodyContent(){
     return ListView.builder(
-
-      itemCount: 1,
+      itemCount: totalTasksCount,
       itemBuilder:(BuildContext context,int index) {
         return Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
-          child: ListTile(
-            // Leading
-            leading: Checkbox(
-              value: currentCheckBoxValue, 
-              onChanged: (value){
-                setState(() {
-                  currentCheckBoxValue = value!;
-                });
-                print(value);
-              }
+          child: Card(
+            margin: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
+            child: ListTile(
+              // Leading
+              leading: Checkbox(
+                
+                value:  taskList[index].markAsDone == 'true' ? true : false,  
+                onChanged: (value){
+                  setState(() {
+                    taskList[index].markAsDone = taskList[index].markAsDone == 'true' ? 'false' : 'true';
+                  });
 
-            // Main Title
-            title:const Text(
-              'Task 1',
-              style: TextStyle(
-                fontSize: 20.0
+                  // print(value);
+                  methodToStrockTheTask(value!);
+
+                  // Updating The data when user click on the checkbox
+                  _helperObject.updateData(taskList[index]);
+                  getUpdatedListFromDatabase();
+                }
               ),
-            ),
-
-            // Trailing
-            trailing: const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.av_timer,
-                ),
-                Text('10:10'),
-              ],
+        
+              // Main Title
+              title: Text(
+                taskList[index].title.toString(),
+                style: currentTextStyle,
+              ),
+        
+              // Trailing
+              trailing: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.av_timer,
+                    color: AppColors.whiteShadeColor,
+                  ),
+                  Text(
+                    '10:10',
+                    style : TextStyle(
+                      color: AppColors.whiteShadeColor,
+                    )
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -93,8 +138,34 @@ class _HomePageState extends State<HomePage>{
     );
   }
 
-  navigateToEditeToDosPage(String title){
-    Navigator.of(context).pushReplacement(PageChangeAnimation.createRoute(title,'toRight','AddTask',ToDo(0, '', 'Low', '')));
+  methodToStrockTheTask(bool value){
+    setState(() {
+      value == true 
+      ? currentTextStyle = decoratedTextStyle
+      : currentTextStyle = normalTextStyle;
+    });
+  }
+
+
+
+  navigateToEditeToDosPage(String title, ToDo object){
+    Navigator.of(context).pushReplacement(PageChangeAnimation.createRoute(title,'toRight','AddTask',object));
+  }
+
+
+  getUpdatedListFromDatabase()async{
+    Future<Database> dbFuture = _helperObject.initializeDatabase();
+
+    dbFuture.then((value)async{
+      List<ToDo> list = await _helperObject.getToDoClassList();
+
+      setState(() {
+        taskList = list;
+        totalTasksCount = list.length;
+        
+      });
+
+    });
   }
 
   // navigateToHomePage(){}

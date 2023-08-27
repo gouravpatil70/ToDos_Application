@@ -10,4 +10,5 @@ class AppColors{
   static const Color dropDownMenuItemColor = Colors.red;
   static const Color onSelectedBottomNavigationButton = Colors.white;
   static const Color bottomNavigationBarButtonColor = Colors.white;
+  static const Color whiteShadeColor = Color.fromARGB(255, 160, 156, 156);
 }

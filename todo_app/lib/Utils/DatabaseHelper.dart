@@ -9,6 +9,7 @@ class DatabaseHelper{
   String colId = 'id';
   String colTitle = 'title';
   String colPriority = 'priority';
+  String colTaskMarkDone = 'markAsDone';
   String colDate = 'date';
 
   static var _databaseHelper;
@@ -34,7 +35,7 @@ class DatabaseHelper{
   }
 
   _onCreateDB(Database db, int version)async{
-    await db.execute('CREATE TABLE $tableName($colId INTEGER PRIMARY KEY, $colTitle TEXT, $colPriority VARCHAR(10),  $colDate TEXT)');
+    await db.execute('CREATE TABLE $tableName($colId INTEGER PRIMARY KEY, $colTitle TEXT, $colPriority VARCHAR(10), $colTaskMarkDone VARCHAR(6), $colDate TEXT)');
   }
 
   Future<int> insertIntoTable(ToDo object)async{
@@ -55,6 +56,17 @@ class DatabaseHelper{
     Database db = await database;
     List<Map<String,dynamic>> dataList = await db.rawQuery('SELECT * FROM $tableName');
     return dataList;
+  }
+
+  Future<List<ToDo>> getToDoClassList()async{
+    List<Map<String,dynamic>> totalQueries = await getAllQueries();
+    int totalCount = totalQueries.length;
+
+    List<ToDo> ls = <ToDo>[];
+    for(int i=0;i<totalCount;i++){
+      ls.add(ToDo.fromMap(totalQueries[i]));
+    }
+    return ls;
   }
 
   Future<int> getTotalCount()async{
