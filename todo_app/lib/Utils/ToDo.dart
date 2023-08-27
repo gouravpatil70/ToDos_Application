@@ -3,6 +3,7 @@ class ToDo{
   var _id;
   var _title;
   var _priority;
+  var _markAsDone = 'false';
   var _date;
 
 
@@ -17,6 +18,8 @@ class ToDo{
   String get priority => _priority;
 
   String get date => _date;
+
+  String get markAsDone => _markAsDone;
 
 
   // Setters
@@ -35,6 +38,10 @@ class ToDo{
   set date(String neDate){
     _date = neDate;
   }
+
+  set markAsDone(String newMarkAsDone){
+    _date = newMarkAsDone;
+  }
   
 
   // toMap
@@ -43,6 +50,7 @@ class ToDo{
     map['id'] = _id;
     map['title'] = _title;
     map['priority'] = _priority;
+    map['markAsDone'] = _markAsDone;
     map['date'] = _date;
     return map;
   }
@@ -52,6 +60,7 @@ class ToDo{
     _id = map['id'];
     _title = map['title'];
     _priority = map['priority'];
+    _markAsDone = map['markAsDone'];
     _date = map['date'];
   }
   
