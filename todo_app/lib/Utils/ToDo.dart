@@ -6,8 +6,8 @@ class ToDo{
   var _date;
 
 
+  ToDo(this._id,this._title,this._priority,this._date);
 
-  ToDo();
 
   // Getters
   int get id => _id;
