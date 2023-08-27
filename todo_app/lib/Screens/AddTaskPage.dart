@@ -3,11 +3,12 @@ import '../Component/Components.dart';
 import '../Animations/PageChangeAnimation.dart';
 import '../Utils/AppColors.dart';
 import '../Utils/DatabaseHelper.dart';
-import '../Utils//ToDo.dart';
+import '../Utils/todo.dart';
 
 class AddTask extends StatefulWidget {
   final String title;
-  const AddTask({super.key, required this.title});
+  final ToDo todoObject;
+  const AddTask({super.key, required this.title, required this.todoObject});
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -17,11 +18,18 @@ class _AddTaskState extends State<AddTask> {
 
   int currentIndex = 1;
   final GlobalKey<FormState> _key = GlobalKey();
-  String currentPriority = 'High';
-  String noteTitle = '';
+  var currentPriority;
+  var noteTitle;
+
+  @override
+  void initState() {
+    super.initState();
+    currentPriority  = widget.todoObject.priority;
+    noteTitle = widget.todoObject.title;
+  }
 
   // Objects
-  ToDo todoObject = ToDo();
+  // ToDo todoObject = ToDo();
   final DatabaseHelper _helperObject = DatabaseHelper();
   
   
@@ -106,7 +114,7 @@ class _AddTaskState extends State<AddTask> {
   }
 
   navigateToHomePage(){
-    Navigator.of(context).pushReplacement(PageChangeAnimation.createRoute('-', 'toLeft', '/'));
+    Navigator.of(context).pushReplacement(PageChangeAnimation.createRoute('-', 'toLeft', '/',''));
   }
 
   changeToDoPriority(String changedPriority){
@@ -121,18 +129,24 @@ class _AddTaskState extends State<AddTask> {
         // print(todoObject.priority);
         // print(todoObject.title);
         // print(todoObject.date);
-        var count = await _helperObject.getTotalCount();
-        todoObject.id = count+1;
-        todoObject.priority = currentPriority;
-        todoObject.title = noteTitle;
-        todoObject.date = DateTime.now().toString().substring(0,11);
+        
+        widget.todoObject.priority = currentPriority;
+        widget.todoObject.title = noteTitle;
+        widget.todoObject.date = DateTime.now().toString().substring(0,11);
 
-        var result = await _helperObject.insertIntoTable(todoObject);
-        print(result);
-        showDialogBox('Success','Data Saved');
+        var result = await _helperObject.insertIntoTable(widget.todoObject);
+        if(result > 0){
+          print(result);
+          showDialogBox('Success','Data Saved');
+        }else{
+          showDialogBox('Error','Something was wrong');
+        }
       }
   }
-  onDeleteMethod(){}
+
+  onDeleteMethod(){
+    // if()
+  }
 
   showDialogBox(String title, String content){
     return showDialog(

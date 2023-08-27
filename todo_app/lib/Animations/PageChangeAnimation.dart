@@ -4,10 +4,10 @@ import '../Screens/AddTaskPage.dart';
 
 class PageChangeAnimation{
 
-  static Route createRoute(String title, String slidePosition, String className){
+  static Route createRoute(String title, String slidePosition, String className,var todoObject){
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation){
-        return className == 'AddTask' ? AddTask(title: title): const HomePage() ;
+        return className == 'AddTask' ? AddTask(title: title,todoObject: todoObject): const HomePage() ;
       },
       transitionDuration: const Duration(milliseconds: 500),
       transitionsBuilder: (context,animation,secondaryAnimation,child){
