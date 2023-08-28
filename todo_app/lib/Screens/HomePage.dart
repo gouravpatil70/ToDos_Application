@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage>{
   int currentSelectedId = 0;
   bool currentCheckBoxValue = false;
 
-  var currentTextStyle;
+  // var currentTextStyle;
   var taskList;
   int totalTasksCount = 0;
   
@@ -35,13 +35,14 @@ class _HomePageState extends State<HomePage>{
     color: AppColors.whiteShadeColor,
   );
 
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      currentTextStyle = normalTextStyle;
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   setState(() {
+  //     currentTextStyle = normalTextStyle;
+  //   });
+  //   print(totalTasksCount);
+  // }
 
   @override
   Widget build(BuildContext context){
@@ -68,7 +69,7 @@ class _HomePageState extends State<HomePage>{
       case 0:
         break;
       case 1:
-        navigateToEditeToDosPage('Add New ToDo',ToDo(0, '', 'Low', ''));
+        navigateToEditeToDosPage('Add New ToDo',ToDo(0, '', 'Low','false', ''));
         break;
     }
   }
@@ -94,17 +95,18 @@ class _HomePageState extends State<HomePage>{
               // Leading
               leading: Checkbox(
                 
-                value:  taskList[index].markAsDone == 'true' ? true : false,  
-                onChanged: (value){
+                value:  taskList[index].markAsDone == 'true' ? true : false,
+                onChanged: (value)async{
                   setState(() {
-                    taskList[index].markAsDone = taskList[index].markAsDone == 'true' ? 'false' : 'true';
+                    taskList[index].markAsDone = (taskList[index].markAsDone == 'true' ? 'false' : 'true');
                   });
 
-                  // print(value);
+                  // print(taskList[index].markAsDone);
+                  // print(taskList[index]);
                   methodToStrockTheTask(value!);
 
                   // Updating The data when user click on the checkbox
-                  _helperObject.updateData(taskList[index]);
+                  await _helperObject.updateData(taskList[index]);
                   getUpdatedListFromDatabase();
                 }
               ),
@@ -112,7 +114,7 @@ class _HomePageState extends State<HomePage>{
               // Main Title
               title: Text(
                 taskList[index].title.toString(),
-                style: currentTextStyle,
+                style: methodToStrockTheTask(taskList[index].markAsDone == 'true' ? true : false),
               ),
         
               // Trailing
@@ -139,13 +141,12 @@ class _HomePageState extends State<HomePage>{
   }
 
   methodToStrockTheTask(bool value){
-    setState(() {
+    TextStyle currentTextStyle;
       value == true 
       ? currentTextStyle = decoratedTextStyle
       : currentTextStyle = normalTextStyle;
-    });
+    return currentTextStyle;
   }
-
 
 
   navigateToEditeToDosPage(String title, ToDo object){
@@ -162,10 +163,10 @@ class _HomePageState extends State<HomePage>{
       setState(() {
         taskList = list;
         totalTasksCount = list.length;
-        
       });
-
     });
+
+    bodyContent();
   }
 
   // navigateToHomePage(){}

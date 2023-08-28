@@ -3,11 +3,11 @@ class ToDo{
   var _id;
   var _title;
   var _priority;
-  var _markAsDone = 'false';
+  var _markAsDone;
   var _date;
 
 
-  ToDo(this._id,this._title,this._priority,this._date);
+  ToDo(this._id,this._title,this._priority,this._markAsDone,this._date);
 
 
   // Getters
@@ -40,7 +40,7 @@ class ToDo{
   }
 
   set markAsDone(String newMarkAsDone){
-    _date = newMarkAsDone;
+    _markAsDone = newMarkAsDone;
   }
   
 
