@@ -35,15 +35,6 @@ class _HomePageState extends State<HomePage>{
     color: AppColors.whiteShadeColor,
   );
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   setState(() {
-  //     currentTextStyle = normalTextStyle;
-  //   });
-  //   print(totalTasksCount);
-  // }
-
   @override
   Widget build(BuildContext context){
     if(taskList == null){
@@ -69,7 +60,7 @@ class _HomePageState extends State<HomePage>{
       case 0:
         break;
       case 1:
-        navigateToEditeToDosPage('Add New ToDo',ToDo(0, '', 'Low','false', ''));
+        navigateToEditeToDosPage('Add New ToDo',ToDo(0, '', 3,'false', ''));
         break;
     }
   }
@@ -83,18 +74,23 @@ class _HomePageState extends State<HomePage>{
       itemCount: totalTasksCount,
       itemBuilder:(BuildContext context,int index) {
         return Card(
+          color: priorityWiseColorSet(taskList[index].priority),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Card(
-            margin: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+            margin: const EdgeInsets.fromLTRB(4.0, 0.0, 0.0, 0.0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: ListTile(
               // Leading
               leading: Checkbox(
-                
+                activeColor: priorityWiseColorSet(taskList[index].priority),
+                side: BorderSide(
+                  color: priorityWiseColorSet(taskList[index].priority),
+                  width: 1.5
+                ),
                 value:  taskList[index].markAsDone == 'true' ? true : false,
                 onChanged: (value)async{
                   setState(() {
@@ -151,6 +147,23 @@ class _HomePageState extends State<HomePage>{
 
   navigateToEditeToDosPage(String title, ToDo object){
     Navigator.of(context).pushReplacement(PageChangeAnimation.createRoute(title,'toRight','AddTask',object));
+  }
+
+  Color priorityWiseColorSet(int priority){
+    Color newColor;
+    switch (priority) {
+
+      case 1:
+        newColor = const Color.fromARGB(255, 239, 89, 89);
+        break;
+      case 2:
+        newColor = const Color.fromARGB(255, 243, 91, 240);
+        break;
+      default:
+        newColor = const Color.fromARGB(255, 93, 235, 124);
+    }
+
+    return newColor;
   }
 
 
