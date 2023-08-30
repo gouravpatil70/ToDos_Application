@@ -51,6 +51,11 @@ class DatabaseHelper{
     int result = await db.update(tableName, object.convertToMapObject(),where: '$colId = ?',whereArgs: [object.id]);
     return result;
   }
+  Future<int> daleteData(int id)async{
+    Database db = await database;
+    int result = await db.delete(tableName,where: '$colId = ?', whereArgs: [id]);
+    return result;
+  }
 
   Future<List<Map<String,dynamic>>> getAllQueries()async{
     Database db = await database;

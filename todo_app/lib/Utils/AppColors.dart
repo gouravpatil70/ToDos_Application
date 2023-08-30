@@ -11,4 +11,7 @@ class AppColors{
   static const Color onSelectedBottomNavigationButton = Colors.white;
   static const Color bottomNavigationBarButtonColor = Colors.white;
   static const Color whiteShadeColor = Color.fromARGB(255, 160, 156, 156);
+  static const Color highPriorityColor = Color.fromARGB(255, 239, 89, 89);
+  static const Color mediumPriorityColor = Color.fromARGB(255, 243, 91, 240);
+  static const Color lowPriorityColor = Color.fromARGB(255, 93, 235, 124);
 }
