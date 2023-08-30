@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage>{
 
                   // print(taskList[index].markAsDone);
                   // print(taskList[index]);
-                  methodToStrockTheTask(value!);
+                  // methodToStrockTheTask(value!,);
 
                   // Updating The data when user click on the checkbox
                   await _helperObject.updateData(taskList[index]);
@@ -138,9 +138,10 @@ class _HomePageState extends State<HomePage>{
 
   methodToStrockTheTask(bool value){
     TextStyle currentTextStyle;
-      value == true 
-      ? currentTextStyle = decoratedTextStyle
-      : currentTextStyle = normalTextStyle;
+    value == true 
+    ? currentTextStyle = decoratedTextStyle
+    : currentTextStyle = normalTextStyle;
+
     return currentTextStyle;
   }
 
@@ -152,15 +153,14 @@ class _HomePageState extends State<HomePage>{
   Color priorityWiseColorSet(int priority){
     Color newColor;
     switch (priority) {
-
       case 1:
-        newColor = const Color.fromARGB(255, 239, 89, 89);
+        newColor = AppColors.highPriorityColor;
         break;
       case 2:
-        newColor = const Color.fromARGB(255, 243, 91, 240);
+        newColor = AppColors.mediumPriorityColor;
         break;
       default:
-        newColor = const Color.fromARGB(255, 93, 235, 124);
+        newColor = AppColors.lowPriorityColor;
     }
 
     return newColor;

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../Component/Components.dart';
 import '../Animations/PageChangeAnimation.dart';
@@ -157,19 +159,28 @@ class _AddTaskState extends State<AddTask> {
 
         var result = await _helperObject.insertIntoTable(widget.todoObject);
         if(result > 0){
+
+          // Debuging purpose
           print(result);
-          showDialogBox('Success','Data Saved');
+
+          showDialogBox('Success','Data Saved',true);
         }else{
-          showDialogBox('Error','Something was wrong');
+          showDialogBox('Error','Something was wrong',true);
         }
       }
+      
   }
 
-  onDeleteMethod(){
-    // if()
+  onDeleteMethod()async{
+    if(widget.todoObject.id == 0){
+      showDialogBox('Error','Please, first add a note',false);
+    }else{
+      await _helperObject.daleteData(widget.todoObject.id);
+      showDialogBox('Error','Data deleted successfully',true);
+    }
   }
 
-  showDialogBox(String title, String content){
+  showDialogBox(String title, String content, bool backToHomepage){
     return showDialog(
       context: context, 
       builder: (BuildContext context){
@@ -187,6 +198,9 @@ class _AddTaskState extends State<AddTask> {
             TextButton(
               onPressed: (){
                 Navigator.of(context).pop();
+                if(backToHomepage){
+                  Navigator.of(context).pushReplacement(PageChangeAnimation.createRoute('','toLeft','HomePage',''));
+                }
               }, 
               style: TextButton.styleFrom(
                 backgroundColor: AppColors.appPrimaryColor,
