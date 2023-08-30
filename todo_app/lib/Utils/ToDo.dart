@@ -15,7 +15,7 @@ class ToDo{
 
   String get title => _title;
 
-  String get priority => _priority;
+  int get priority => _priority;
 
   String get date => _date;
 
@@ -31,7 +31,7 @@ class ToDo{
     _title = newtitle;
   }
 
-  set priority(String newPriority){
+  set priority(int newPriority){
     _priority = newPriority;
   }
 

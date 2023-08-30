@@ -35,7 +35,7 @@ class DatabaseHelper{
   }
 
   _onCreateDB(Database db, int version)async{
-    await db.execute('CREATE TABLE $tableName($colId INTEGER PRIMARY KEY, $colTitle TEXT, $colPriority VARCHAR(10), $colTaskMarkDone VARCHAR(6), $colDate TEXT)');
+    await db.execute('CREATE TABLE $tableName($colId INTEGER PRIMARY KEY, $colTitle TEXT, $colPriority INTEGER, $colTaskMarkDone VARCHAR(6), $colDate TEXT)');
   }
 
   Future<int> insertIntoTable(ToDo object)async{
@@ -54,7 +54,7 @@ class DatabaseHelper{
 
   Future<List<Map<String,dynamic>>> getAllQueries()async{
     Database db = await database;
-    List<Map<String,dynamic>> dataList = await db.rawQuery('SELECT * FROM $tableName');
+    List<Map<String,dynamic>> dataList = await db.rawQuery('SELECT * FROM $tableName ORDER BY $colPriority ASC');
     return dataList;
   }
 

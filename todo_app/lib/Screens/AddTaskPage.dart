@@ -24,7 +24,7 @@ class _AddTaskState extends State<AddTask> {
   @override
   void initState() {
     super.initState();
-    currentPriority  = widget.todoObject.priority;
+    currentPriority  = convertToString(widget.todoObject.priority);
     noteTitle = widget.todoObject.title;
   }
 
@@ -122,6 +122,27 @@ class _AddTaskState extends State<AddTask> {
       currentPriority = changedPriority;
     });
   }
+  convertToString(int value){
+    switch (value) {
+      case 1:
+        return 'High';
+      case 2:
+        return 'Medium';
+      default:
+        return 'Low';
+    }
+  }
+
+  convertToInt(String value){
+    switch (value) {
+      case 'High':
+        return 1;
+      case 'Medium':
+        return 2;
+      default:
+        return 3;
+    }
+  }
 
   onSaveMethod()async{
       if(_key.currentState!.validate()){
@@ -130,7 +151,7 @@ class _AddTaskState extends State<AddTask> {
         // print(todoObject.title);
         // print(todoObject.date);
         
-        widget.todoObject.priority = currentPriority;
+        widget.todoObject.priority = convertToInt(currentPriority);
         widget.todoObject.title = noteTitle;
         widget.todoObject.date = DateTime.now().toString().substring(0,11);
 
