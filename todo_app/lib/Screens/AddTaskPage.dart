@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import '../Component/Components.dart';
 import '../Animations/PageChangeAnimation.dart';

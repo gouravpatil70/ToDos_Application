@@ -45,7 +45,43 @@ class _HomePageState extends State<HomePage>{
     return Scaffold(
       backgroundColor: AppColors.appBackgroundColor,
       appBar: Components.customAppBarMethod("ToDo's", true, calenderShowMethod),
-      body: bodyContent(),
+      body: Column(
+        children: [
+          Card(
+            margin: EdgeInsets.zero,
+            // margin: const EdgeInsets.only(top:5.0,left: 5.0,right:5.0,bottom: 0),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0)),
+            ),
+            color: AppColors.appBackgroundColor,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5.0,bottom: 5.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  
+                  Text(
+                    DateTime.now().toString().substring(0,10),
+                    style: const TextStyle(
+                      fontSize: 15.0,
+                    ),
+                  ),
+                  
+                  const Padding(
+                    padding: EdgeInsets.only(left: 3.0,right: 10.0),
+                    child: Icon(
+                      Icons.keyboard_arrow_down_outlined,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: bodyContent(),
+          ),
+        ]
+      ),
       bottomNavigationBar: Components.customBottomNavigationBar(currentSelectedId,changeDisplayPage),
     );
   }
@@ -65,7 +101,23 @@ class _HomePageState extends State<HomePage>{
     }
   }
 
-  calenderShowMethod(){}
+  calenderShowMethod(){
+    var currentYear = DateTime.now().year;
+    var currentMounth = DateTime.now().month;
+    var startDate = DateTime(currentYear,currentMounth,1);
+
+    // print(currentYear);
+    // print(currentMounth);
+    // print(startDate);
+
+    showDateRangePicker(
+      context: context, 
+      firstDate: DateTime(2023,1,1), 
+      lastDate: DateTime.now(),
+      initialDateRange: DateTimeRange(start: startDate, end: DateTime.now()),
+    );
+
+  }
 
   defaultEmptyMethod(){}
 
