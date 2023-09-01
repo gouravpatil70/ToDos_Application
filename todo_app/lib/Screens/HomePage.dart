@@ -5,6 +5,7 @@ import '../Component/Components.dart';
 import '../Animations/PageChangeAnimation.dart';
 import 'package:sqflite/sqflite.dart';
 import '../Utils/DatabaseHelper.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget{
 
@@ -16,24 +17,33 @@ class HomePage extends StatefulWidget{
 
 class _HomePageState extends State<HomePage>{
 
+  // Required Variables
   int currentSelectedId = 0;
   bool currentCheckBoxValue = false;
-
-  // var currentTextStyle;
   var taskList;
   int totalTasksCount = 0;
+  var selectedDateRangePicker;
   
+  // Database helper class Object
   final DatabaseHelper _helperObject = DatabaseHelper();
 
+  // Text style decorations
   TextStyle normalTextStyle = const TextStyle(
     fontSize: 20.0,
   );
-
   TextStyle decoratedTextStyle = const TextStyle(
     fontSize: 20.0,
     decoration: TextDecoration.lineThrough,
     color: AppColors.whiteShadeColor,
   );
+
+
+  @override
+  void initState() {
+    super.initState();
+    // selectedDateRangePicker = DateFormat.yMMMd().format(DateTime.now());
+    selectedDateRangePicker = 'Today';
+  }
 
   @override
   Widget build(BuildContext context){
@@ -49,7 +59,6 @@ class _HomePageState extends State<HomePage>{
         children: [
           Card(
             margin: EdgeInsets.zero,
-            // margin: const EdgeInsets.only(top:5.0,left: 5.0,right:5.0,bottom: 0),
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0)),
             ),
@@ -61,7 +70,7 @@ class _HomePageState extends State<HomePage>{
                 children: [
                   
                   Text(
-                    DateTime.now().toString().substring(0,10),
+                    selectedDateRangePicker,
                     style: const TextStyle(
                       fontSize: 15.0,
                     ),
@@ -109,14 +118,29 @@ class _HomePageState extends State<HomePage>{
     // print(currentYear);
     // print(currentMounth);
     // print(startDate);
-
+    
     showDateRangePicker(
       context: context, 
       firstDate: DateTime(2023,1,1), 
       lastDate: DateTime.now(),
       initialDateRange: DateTimeRange(start: startDate, end: DateTime.now()),
-    );
 
+    ).then((value){
+      var data = '${DateFormat.yMMMd().format(value!.start)} - ${DateFormat.yMMMd().format(value.end)}';
+
+      // If The inital range value & final range value is same then show only one date.
+      if(value.start == value.end){
+        data = DateFormat.yMMMd().format(value.start);
+      }else if(value.end.toString().substring(0,10) == DateTime.now().toString().substring(0,10)){
+        data = 'Today';
+      }
+      setState(() {
+        selectedDateRangePicker = data;
+      });
+
+      print(data);
+      
+    });
   }
 
   defaultEmptyMethod(){}
