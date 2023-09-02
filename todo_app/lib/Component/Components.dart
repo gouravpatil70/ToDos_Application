@@ -170,4 +170,30 @@ class Components{
     );
   }
 
+  static appDrawer(){
+    return Drawer(
+      child: ListView(
+        children: const [
+          UserAccountsDrawerHeader(
+            accountName: Text('ToDos one'), 
+            accountEmail: Text(''),
+            currentAccountPicture: Icon(
+              Icons.tornado_sharp,
+              size: 40.0,
+              color: Colors.white,
+            ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: ListTile(
+              title: Text('Settings'),
+              trailing: Icon(Icons.settings),
+            )
+          )
+        ],
+      ),
+    );
+  }
+
 }
