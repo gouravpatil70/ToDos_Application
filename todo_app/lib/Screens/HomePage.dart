@@ -55,6 +55,7 @@ class _HomePageState extends State<HomePage>{
     return Scaffold(
       backgroundColor: AppColors.appBackgroundColor,
       appBar: Components.customAppBarMethod("ToDo's", true, calenderShowMethod),
+      drawer: Components.appDrawer(),
       body: Column(
         children: [
           Card(
@@ -91,7 +92,8 @@ class _HomePageState extends State<HomePage>{
           ),
         ]
       ),
-      bottomNavigationBar: Components.customBottomNavigationBar(currentSelectedId,changeDisplayPage),
+      
+      bottomNavigationBar: Components.curvedBottomNavigatorBar(currentSelectedId,changeDisplayPage),
     );
   }
 
@@ -131,7 +133,7 @@ class _HomePageState extends State<HomePage>{
       // If The inital range value & final range value is same then show only one date.
       if(value.start == value.end){
         data = DateFormat.yMMMd().format(value.start);
-      }else if(value.end.toString().substring(0,10) == DateTime.now().toString().substring(0,10)){
+      }else if(value.start.toString().substring(0,10) == DateTime.now().toString().substring(0,10)){
         data = 'Today';
       }
       setState(() {
@@ -205,6 +207,9 @@ class _HomePageState extends State<HomePage>{
                   ),
                 ],
               ),
+              onTap: (){
+                navigateToEditeToDosPage('Edit ToDo', taskList[index]);
+              },
             ),
           ),
         );

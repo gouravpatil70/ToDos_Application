@@ -38,6 +38,7 @@ class _AddTaskState extends State<AddTask> {
     return  Scaffold(
       appBar: Components.customAppBarMethod(widget.title, false, defaultEmptyMethod),
       backgroundColor: AppColors.appBackgroundColor,
+      drawer: Components.appDrawer(),
       body: Form(
         key: _key,
         child: SingleChildScrollView(
@@ -89,7 +90,7 @@ class _AddTaskState extends State<AddTask> {
           ),
         ),
       ),
-      bottomNavigationBar: Components.customBottomNavigationBar(currentIndex, changeDisplayPage),
+      bottomNavigationBar: Components.curvedBottomNavigatorBar(currentIndex, changeDisplayPage),
     );
     
   }
