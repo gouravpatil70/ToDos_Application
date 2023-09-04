@@ -13,6 +13,8 @@ class _SettingsState extends State<Settings>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: Components.customAppBarMethod('Settings', false, defaultMethod),
+      drawer: Components.appDrawer(context),
+      
     );
   }
 

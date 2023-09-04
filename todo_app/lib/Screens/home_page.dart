@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage>{
       case 0:
         break;
       case 1:
-        navigateToEditeToDosPage('Add New ToDo',ToDo(0, '', 3,'false', ''));
+        navigateToEditeToDosPage('Add New ToDo',ToDo(0, '', 0,'false', ''));
         break;
     }
   }
