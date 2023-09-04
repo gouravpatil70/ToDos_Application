@@ -5,6 +5,7 @@ import 'todo.dart';
 
 class DatabaseHelper{
 
+  // This Variables for the ToDo's list 
   String tableName = 'todoTable';
   String colId = 'id';
   String colTitle = 'title';
@@ -38,33 +39,33 @@ class DatabaseHelper{
     await db.execute('CREATE TABLE $tableName($colId INTEGER PRIMARY KEY, $colTitle TEXT, $colPriority INTEGER, $colTaskMarkDone VARCHAR(6), $colDate TEXT)');
   }
 
-  Future<int> insertIntoTable(ToDo object)async{
+  Future<int> insertIntoToDosTable(ToDo object)async{
     Database db = await database;
-    var count = await getTotalCount();
+    var count = await getTotalToDosCount();
     object.id = count+1;
     int result = await db.insert(tableName, object.convertToMapObject());
     return result;
   }
 
-  Future<int> updateData(ToDo object)async{
+  Future<int> updateToDosData(ToDo object)async{
     Database db = await database;
     int result = await db.update(tableName, object.convertToMapObject(),where: '$colId = ?',whereArgs: [object.id]);
     return result;
   }
-  Future<int> daleteData(int id)async{
+  Future<int> daleteToDosData(int id)async{
     Database db = await database;
     int result = await db.delete(tableName,where: '$colId = ?', whereArgs: [id]);
     return result;
   }
 
-  Future<List<Map<String,dynamic>>> getAllQueries()async{
+  Future<List<Map<String,dynamic>>> getAllToDosQueries()async{
     Database db = await database;
     List<Map<String,dynamic>> dataList = await db.rawQuery('SELECT * FROM $tableName ORDER BY $colPriority ASC');
     return dataList;
   }
 
   Future<List<ToDo>> getToDoClassList()async{
-    List<Map<String,dynamic>> totalQueries = await getAllQueries();
+    List<Map<String,dynamic>> totalQueries = await getAllToDosQueries();
     int totalCount = totalQueries.length;
 
     List<ToDo> ls = <ToDo>[];
@@ -74,8 +75,8 @@ class DatabaseHelper{
     return ls;
   }
 
-  Future<int> getTotalCount()async{
-    List<Map<String,dynamic>> ls = await getAllQueries();
+  Future<int> getTotalToDosCount()async{
+    List<Map<String,dynamic>> ls = await getAllToDosQueries();
     int result = ls.length;
     return result;
   }
