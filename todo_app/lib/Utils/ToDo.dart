@@ -2,7 +2,7 @@ class ToDo{
 
   var _id;
   var _title;
-  var _priority;
+  var _priority = 3;
   var _markAsDone;
   var _date;
 

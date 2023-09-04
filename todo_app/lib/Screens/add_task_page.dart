@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../Component/Components.dart';
+import '../Component/app_components.dart';
 import '../Animations/PageChangeAnimation.dart';
 import '../Utils/AppColors.dart';
-import '../Utils/DatabaseHelper.dart';
+import '../Utils/database_helper.dart';
 import '../Utils/todo.dart';
 
 class AddTask extends StatefulWidget {
@@ -38,7 +38,7 @@ class _AddTaskState extends State<AddTask> {
     return  Scaffold(
       appBar: Components.customAppBarMethod(widget.title, false, defaultEmptyMethod),
       backgroundColor: AppColors.appBackgroundColor,
-      drawer: Components.appDrawer(),
+      drawer: Components.appDrawer(context),
       body: Form(
         key: _key,
         child: SingleChildScrollView(

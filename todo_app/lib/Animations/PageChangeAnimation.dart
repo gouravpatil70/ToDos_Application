@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Screens/HomePage.dart';
-import '../Screens/AddTaskPage.dart';
+import 'package:todo_app/Screens/home_page.dart';
+import '../Screens/add_task_page.dart';
 
 class PageChangeAnimation{
 

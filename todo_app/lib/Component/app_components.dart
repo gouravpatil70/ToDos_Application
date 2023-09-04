@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Screens/settings_page.dart';
 import '../Utils/AppColors.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 class Components{
@@ -170,11 +171,11 @@ class Components{
     );
   }
 
-  static appDrawer(){
+  static appDrawer(BuildContext context){
     return Drawer(
       child: ListView(
-        children: const [
-          UserAccountsDrawerHeader(
+        children: [
+          const UserAccountsDrawerHeader(
             accountName: Text('ToDos one'), 
             accountEmail: Text(''),
             currentAccountPicture: Icon(
@@ -187,13 +188,32 @@ class Components{
           Padding(
             padding: EdgeInsets.all(10.0),
             child: ListTile(
-              title: Text('Settings'),
-              trailing: Icon(Icons.settings),
-            )
+              title: const Text('Settings'),
+              trailing: const Icon(Icons.settings),
+              onTap: (){
+                Components object = Components();
+                object.navigateToSettingsPage(context);
+              },
+            ),
           )
         ],
       ),
     );
   }
 
+
+  // Common Methods for all files
+
+  
+  // Navigate to the settings Page
+  navigateToSettingsPage(BuildContext context){
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (BuildContext context){
+          return const Settings();
+        }
+      ));
+  } 
+
+
 }
+

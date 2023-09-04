@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../Utils/todo.dart';
 import '../Utils/AppColors.dart';
-import '../Component/Components.dart';
+import '../Component/app_components.dart';
 import '../Animations/PageChangeAnimation.dart';
 import 'package:sqflite/sqflite.dart';
-import '../Utils/DatabaseHelper.dart';
+import '../Utils/database_helper.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget{
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage>{
     return Scaffold(
       backgroundColor: AppColors.appBackgroundColor,
       appBar: Components.customAppBarMethod("ToDo's", true, calenderShowMethod),
-      drawer: Components.appDrawer(),
+      drawer: Components.appDrawer(context),
       body: Column(
         children: [
           Card(
@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage>{
       case 0:
         break;
       case 1:
-        navigateToEditeToDosPage('Add New ToDo',ToDo(0, '', 3,'false', ''));
+        navigateToEditeToDosPage('Add New ToDo',ToDo(0, '', 0,'false', ''));
         break;
     }
   }
