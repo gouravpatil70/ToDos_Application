@@ -156,7 +156,7 @@ class _AddTaskState extends State<AddTask> {
         widget.todoObject.title = noteTitle;
         widget.todoObject.date = DateTime.now().toString().substring(0,11);
 
-        var result = await _helperObject.insertIntoTable(widget.todoObject);
+        var result = await _helperObject.insertIntoToDosTable(widget.todoObject);
         if(result > 0){
 
           // Debuging purpose
@@ -174,7 +174,7 @@ class _AddTaskState extends State<AddTask> {
     if(widget.todoObject.id == 0){
       showDialogBox('Error','Please, first add a note',false);
     }else{
-      await _helperObject.daleteData(widget.todoObject.id);
+      await _helperObject.daleteToDosData(widget.todoObject.id);
       showDialogBox('Error','Data deleted successfully',true);
     }
   }

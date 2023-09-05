@@ -180,7 +180,7 @@ class _HomePageState extends State<HomePage>{
                   // methodToStrockTheTask(value!,);
 
                   // Updating The data when user click on the checkbox
-                  await _helperObject.updateData(taskList[index]);
+                  await _helperObject.updateToDosData(taskList[index]);
                   getUpdatedListFromDatabase();
                 }
               ),
