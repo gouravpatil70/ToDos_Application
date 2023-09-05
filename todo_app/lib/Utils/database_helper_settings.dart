@@ -36,4 +36,5 @@ class DatabaseHelperSettings{
     return await db.execute('CREATE TABLE $tableName($colSrNo INTEGER PRIMARY KEY, $colDefaultPriority INTEGER, $coldDefaultBottomNavigation VARCHAR(30))');
   }
 
+  
 }
