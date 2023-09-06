@@ -37,4 +37,6 @@ class UserSettings{
     _defaultPriority = mapObject['defaultPriority'];
     _bottomNavigationBar = mapObject['defaultBottomNavigation'];
   }
+
+  
 }

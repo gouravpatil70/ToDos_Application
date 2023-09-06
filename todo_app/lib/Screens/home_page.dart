@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/Utils/user_settings.dart';
 import '../Utils/todo.dart';
 import '../Utils/AppColors.dart';
 import '../Component/app_components.dart';
@@ -6,6 +7,8 @@ import '../Animations/PageChangeAnimation.dart';
 import 'package:sqflite/sqflite.dart';
 import '../Utils/database_helper.dart';
 import 'package:intl/intl.dart';
+import '../Utils/database_helper_settings.dart';
+
 
 class HomePage extends StatefulWidget{
 
@@ -21,11 +24,15 @@ class _HomePageState extends State<HomePage>{
   int currentSelectedId = 0;
   bool currentCheckBoxValue = false;
   var taskList;
+  var userSettingsList;
   int totalTasksCount = 0;
   var selectedDateRangePicker;
   
   // Database helper class Object
-  final DatabaseHelper _helperObject = DatabaseHelper();
+  final DatabaseHelper _todoHelperObject = DatabaseHelper();
+
+  // Getting the UserSettings database object
+  final DatabaseHelperSettings _userSettings = DatabaseHelperSettings();
 
   // Text style decorations
   TextStyle normalTextStyle = const TextStyle(
@@ -47,10 +54,18 @@ class _HomePageState extends State<HomePage>{
 
   @override
   Widget build(BuildContext context){
+
+    if(userSettingsList == null){
+      userSettingsList = <UserSettings>[];
+      userSettingsTable();
+    }
+
     if(taskList == null){
       taskList = <ToDo>[];
       getUpdatedListFromDatabase();
     }
+
+    
 
     return Scaffold(
       backgroundColor: AppColors.appBackgroundColor,
@@ -128,19 +143,19 @@ class _HomePageState extends State<HomePage>{
       initialDateRange: DateTimeRange(start: startDate, end: DateTime.now()),
 
     ).then((value){
-      var data = '${DateFormat.yMMMd().format(value!.start)} - ${DateFormat.yMMMd().format(value.end)}';
+      var dateTimeFormat = '${DateFormat.yMMMd().format(value!.start)} - ${DateFormat.yMMMd().format(value.end)}';
 
       // If The inital range value & final range value is same then show only one date.
       if(value.start == value.end){
-        data = DateFormat.yMMMd().format(value.start);
+        dateTimeFormat = DateFormat.yMMMd().format(value.start);
       }else if(value.start.toString().substring(0,10) == DateTime.now().toString().substring(0,10)){
-        data = 'Today';
+        dateTimeFormat = 'Today';
       }
       setState(() {
-        selectedDateRangePicker = data;
+        selectedDateRangePicker = dateTimeFormat;
       });
 
-      print(data);
+      // print(dateTimeFormat);
       
     });
   }
@@ -180,7 +195,7 @@ class _HomePageState extends State<HomePage>{
                   // methodToStrockTheTask(value!,);
 
                   // Updating The data when user click on the checkbox
-                  await _helperObject.updateToDosData(taskList[index]);
+                  await _todoHelperObject.updateToDosData(taskList[index]);
                   getUpdatedListFromDatabase();
                 }
               ),
@@ -249,10 +264,10 @@ class _HomePageState extends State<HomePage>{
 
 
   getUpdatedListFromDatabase()async{
-    Future<Database> dbFuture = _helperObject.initializeDatabase();
+    Future<Database> dbFuture = _todoHelperObject.initializeDatabase();
 
     dbFuture.then((value)async{
-      List<ToDo> list = await _helperObject.getToDoClassList();
+      List<ToDo> list = await _todoHelperObject.getToDoClassList();
 
       setState(() {
         taskList = list;
@@ -262,6 +277,27 @@ class _HomePageState extends State<HomePage>{
 
     bodyContent();
   }
+
+  // Creating the database & inserting some queries into the User Settings database
+  userSettingsTable(){
+    Future<Database> dbFuture = _userSettings.initializeDatabase();
+    dbFuture.then((value)async{
+      List<UserSettings> userSettingsList = await _userSettings.getObjectList();
+
+      // Inserting some settings into it.
+      if(userSettingsList.length == 0){
+        var result = await _userSettings.insertIntoSettingsTable(UserSettings(1, 'Low', 'curvedBottomNavigatorBar'));
+
+        print(result);
+      }
+
+      setState(() {
+        this.userSettingsList = userSettingsList;
+
+      });
+    });
+  }
+
 
   // navigateToHomePage(){}
   
