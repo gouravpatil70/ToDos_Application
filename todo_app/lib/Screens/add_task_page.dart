@@ -20,6 +20,7 @@ class _AddTaskState extends State<AddTask> {
   final GlobalKey<FormState> _key = GlobalKey();
   var currentPriority;
   var noteTitle;
+  List<String> dropDownItems = <String>['Low','Medium','High'];
 
   @override
   void initState() {
@@ -56,7 +57,7 @@ class _AddTaskState extends State<AddTask> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0.0, 40.0, 40.0, 10.0),
-                      child: Components.dropDownButtonWidget(currentPriority,changeToDoPriority),
+                      child: Components.dropDownButtonWidget(currentPriority,changeToDoPriority,dropDownItems),
                     ),
                   )
                 ],

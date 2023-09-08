@@ -26,7 +26,7 @@ class Components{
   }
 
 
-  static BottomNavigationBar customBottomNavigationBar(int currentSelectedId,var changeDisplayPage){
+  static BottomNavigationBar simpleBottomNavigationBar(int currentSelectedId,var changeDisplayPage){
     return BottomNavigationBar(
         items: const <BottomNavigationBarItem>[ 
 
@@ -97,9 +97,7 @@ class Components{
 
 
   // Dropdown Button
-  static dropDownButtonWidget(String currentPriority,var changedPriority){
-    const List<String> dropDownItems = <String>['Low','Medium','High'];
-    
+  static dropDownButtonWidget(String currentPriority,var changedPriority, List<String> dropDownItemsList){
     return DropdownButton(
       value: currentPriority,
       icon: const Icon(
@@ -114,7 +112,7 @@ class Components{
       onChanged: (value){
         changedPriority(value);
       },
-      items: dropDownItems.map<DropdownMenuItem<String>>((String value){
+      items: dropDownItemsList.map<DropdownMenuItem<String>>((String value){
         return DropdownMenuItem(
           value: value,
           child: Padding(
