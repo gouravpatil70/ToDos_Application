@@ -205,7 +205,7 @@ class Components{
   
   // Navigate to the settings Page
   navigateToSettingsPage(BuildContext context){
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
+      Navigator.of(context).push(MaterialPageRoute(
         builder: (BuildContext context){
           return const Settings();
         }

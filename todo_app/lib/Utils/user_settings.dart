@@ -5,17 +5,18 @@ class UserSettings{
   var _bottomNavigationBar;
   
 
-  UserSettings(this._srno,this._defaultPriority,this._bottomNavigationBar);
+  UserSettings();
+  UserSettings.withData(this._srno,this._defaultPriority,this._bottomNavigationBar);
 
   int get srno => _srno;
-  String get defaultPriority => _defaultPriority;
+  int get defaultPriority => _defaultPriority;
   String get bottomNavigationBar => _bottomNavigationBar;
 
   // Setters
   set srno(int newSrno){
     _srno = newSrno;
   }
-  set defaultPriority(String newPriority){
+  set defaultPriority(int newPriority){
     _defaultPriority = newPriority;
   }
   set bottomNavigationBar(String newNavigationBar){
