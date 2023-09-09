@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage>{
       case 0:
         break;
       case 1:
-        navigateToEditeToDosPage('Add New ToDo',ToDo(0, '', 0,'false', ''));
+        navigateToEditeToDosPage('Add New ToDo',ToDo(0, '', userSettingsList[0].defaultPriority,'false', ''));
         break;
     }
   }
@@ -285,8 +285,8 @@ class _HomePageState extends State<HomePage>{
       List<UserSettings> userSettingsList = await _userSettings.getObjectList();
 
       // Inserting some settings into it.
-      if(userSettingsList.length == 0){
-        var result = await _userSettings.insertIntoSettingsTable(UserSettings(1, 'Low', 'curvedBottomNavigatorBar'));
+      if(userSettingsList.isEmpty){
+        var result = await _userSettings.insertIntoSettingsTable(UserSettings.withData(1, 'Low', 'curvedBottomNavigatorBar'));
 
         print(result);
       }
